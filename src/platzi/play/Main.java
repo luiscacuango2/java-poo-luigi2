@@ -2,45 +2,29 @@ package platzi.play;
 
 import platzi.play.contenido.Pelicula;
 import platzi.play.plataforma.Usuario;
+import platzi.play.util.ScannerUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class Main {
+    public static final String NOMBRE_PLATAFORMA = "SISTEMA DE GESTIÓN DE PELÍCULAS";
+    public static final String VERSION = "1.0.0";
+
     public static void main(String[] args) {
-        System.out.println("SISTEMA DE GESTIÓN DE PELÍCULAS ");
+        System.out.println(NOMBRE_PLATAFORMA + " v" + VERSION);
 
-        Pelicula pelicula = new Pelicula();
-        pelicula.titulo = "El señor de los anillos";
-        pelicula.fechaEstreno = LocalDate.of(2018, 10, 15);
-        pelicula.genero = "Fantasía";
-        pelicula.calificar(4.7);
-        pelicula.duracion = 120;
+        String nombre = ScannerUtils.capturarTexto("Nombre del contenido");
+        String genero = ScannerUtils.capturarTexto("Genero del contenido");
+        int duracion = ScannerUtils.capturarNumero("Duracion del contenido");
+        double calificacion = ScannerUtils.capturarDecimal("Calificacion del contenido");
 
-//        System.out.println(pelicula.obtenerFichaTecnica());
+        Pelicula pelicula = new Pelicula(nombre, duracion, genero, calificacion);
 
-        long duracionLong = pelicula.duracion;
+        System.out.println(pelicula.obtenerFichaTecnica());
 
-        System.out.println("La duración Long es: " + duracionLong);
-
-        Usuario usuario = new Usuario();
-        usuario.nombre = "Juan";
-        usuario.fechaRegistro = LocalDateTime.of(2025, 12, 11, 17,58, 45);
-
-        System.out.println(usuario.fechaRegistro);
-
+        Usuario usuario = new Usuario("Pepito", "pepito@hotmail.com");
         usuario.ver(pelicula);
 
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.println("Cual es tu nombre?");
-//        String nombre = scanner.nextLine();
-//
-//        System.out.println("Hola " + nombre + ", esto es Platzi Play!");
-//
-//        System.out.println(nombre + " cuantos años tienes?");
-//        int edad = scanner.nextInt();
-//
-//        System.out.println(nombre + " puedes ver contenido +" + edad);
     }
 }
