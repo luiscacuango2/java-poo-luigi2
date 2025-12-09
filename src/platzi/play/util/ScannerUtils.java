@@ -13,6 +13,10 @@ public class ScannerUtils {
     public static int capturarNumero(String mensaje){
         System.out.println(mensaje + ": ");
 
+        while(!SCANNER.hasNextInt()){
+            System.out.println("Dato no aceptado");
+        }
+
         int dato = SCANNER.nextInt();
         SCANNER.nextLine();
         return dato;
