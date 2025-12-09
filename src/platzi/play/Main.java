@@ -15,8 +15,12 @@ public class Main {
     public static final int MOSTRAR_TODO = 2;
     public static final int BUSCAR_POR_TITULO = 3;
     public static final int BUSCAR_POR_GENERO = 4;
-    public static final int ELIMINAR = 8;
-    public static final int SALIR = 9;
+    public static final int VER_POPULARES = 5;
+    public static final int VER_MUY_POPULARES = 6;
+    public static final int VER_MAS_LARGA = 7;
+    public static final int VER_MAS_CORTA = 8;
+    public static final int ELIMINAR = 9;
+    public static final int SALIR = 10;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -24,15 +28,21 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
+        System.out.println("Más de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+
         while(true){
             int opcionElegida = ScannerUtils.capturarNumero("""
                     Ingrese una de las siguientes opciones:
                     1. Agregar contenido
                     2. Mostrar todo
-                    3. Buscar por titulo                    
+                    3. Buscar por titulo
                     4. Buscar por genero
-                    8. Eliminar
-                    9. Salir
+                    5. Ver populares
+                    6. Ver muy populares
+                    7. Ver mas larga
+                    8. Ver corta
+                    9. Eliminar
+                    10. Salir
                     """);
 
             switch (opcionElegida){
@@ -44,7 +54,10 @@ public class Main {
 
                     plataforma.agregar(new Pelicula(nombre, duracion, genero, calificacion));
                 }
-                case MOSTRAR_TODO -> plataforma.mostrarTitulos();
+                case MOSTRAR_TODO -> {
+                    List<String> titulos = plataforma.getTitulos();
+                    titulos.forEach(System.out::println);
+                }
                 case BUSCAR_POR_TITULO -> {
                     String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
                     Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscado);
@@ -61,6 +74,27 @@ public class Main {
                     List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
                     System.out.println(contenidoPorGenero.size() + " encontrados para el género " + generoBuscado);
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica() + "\n"));
+                }
+                case VER_POPULARES -> {
+                    int cantidad = ScannerUtils.capturarNumero("Cantidad de resultados a mostrar");
+
+                    List<Pelicula> contenidosPopulares = plataforma.getPopulares(cantidad);
+                    contenidosPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                }
+                case VER_MUY_POPULARES -> {
+                    System.out.println("Las películas muy populares 🌟 son:");
+                    List<Pelicula> peliculasMuyPopulares = plataforma.getMuyPopulares();
+                    peliculasMuyPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                }
+                case VER_MAS_LARGA -> {
+                    System.out.println("Las película mas larga es:\n");
+                    Pelicula peliculaMasLarga = plataforma.getMasLarga();
+                    System.out.println(peliculaMasLarga.obtenerFichaTecnica() + "⌛ Duración: " + peliculaMasLarga.getDuracion() + "\n");
+                }
+                case VER_MAS_CORTA -> {
+                    System.out.println("Las película mas corta es:\n");
+                    Pelicula peliculaMasCorta = plataforma.getMasCorta();
+                    System.out.println(peliculaMasCorta.obtenerFichaTecnica() + "⌛ Duración: " + peliculaMasCorta.getDuracion() + "\n");
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
