@@ -19,8 +19,11 @@ public class Main {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
         System.out.println(NOMBRE_PLATAFORMA + " v" + VERSION);
 
+        cargarPeliculas(plataforma);
+
         while(true){
             int opcionElegida = ScannerUtils.capturarNumero("""
+                    Ingrese una de las siguientes opciones:
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar por titulo
@@ -41,27 +44,41 @@ public class Main {
                 }
                 case MOSTRAR_TODO -> plataforma.mostrarTitulos();
                 case BUSCAR_POR_TITULO -> {
+                    String nombreBuscado = ScannerUtils.capturarTexto("Nombre del contenido a buscar");
+                    Pelicula pelicula = plataforma.buscarPorTitulo(nombreBuscado);
 
+                    if(pelicula != null){
+                        System.out.println(pelicula.obtenerFichaTecnica());
+                    } else {
+                        System.out.println(nombreBuscado +  " no existe dentro de " + plataforma.getNombre());
+                    }
                 }
                 case ELIMINAR -> {
+                    String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombreAEliminar);
 
+                    if(contenido != null){
+                        plataforma.eliminar(contenido);
+                        System.out.println(nombreAEliminar + " eliminado! ❌");
+                    } else {
+                        System.out.println(nombreAEliminar +  " no existe dentro de " + plataforma.getNombre());
+                    }
                 }
                 case SALIR -> System.exit(0);
             }
         }
+    }
 
-
-//        Pelicula pelicula2 = new Pelicula("F1 the Movie", 202, "Action");
-//
-//        plataforma.agregar(pelicula);
-//        plataforma.agregar(pelicula2);
-//        System.out.println("Numero de elementos en la plataform " + plataforma.getContenido().size());
-//        plataforma.eliminar(pelicula2);
-//
-//        plataforma.mostrarTitulos();;
-//
-//        Usuario usuario = new Usuario("Pepito", "pepito@hotmail.com");
-//        usuario.ver(pelicula);
-
+    private static void cargarPeliculas(Plataforma plataforma) {
+        plataforma.agregar(new Pelicula("Shrek", 90, "Animada"));
+        plataforma.agregar(new Pelicula("Inception", 148, "Ciencia Ficción"));
+        plataforma.agregar(new Pelicula("Titanic", 195, "Drama", 4.6));
+        plataforma.agregar(new Pelicula("John Wick", 101, "Acción"));
+        plataforma.agregar(new Pelicula("El Conjuro", 112, "Terror", 3.0));
+        plataforma.agregar(new Pelicula("Coco", 105, "Animada", 4.7));
+        plataforma.agregar(new Pelicula("Interstellar", 169, "Ciencia Ficción", 5));
+        plataforma.agregar(new Pelicula("Joker", 122, "Drama"));
+        plataforma.agregar(new Pelicula("Toy Story", 81, "Animada", 4.5));
+        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, "Acción", 3.9));
     }
 }
