@@ -41,9 +41,9 @@ public class Plataforma {
                 .orElse(null);
     }
 
-    public List<Pelicula> buscarPorGenero(String genero){
+    public List<Pelicula> buscarPorGenero(Genero genero){
         return contenido.stream()
-                .filter(contenido -> contenido.getGenero().equalsIgnoreCase(genero))
+                .filter(contenido -> contenido.getGenero().equals(genero))
                 .toList();
     }
 
