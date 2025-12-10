@@ -1,6 +1,7 @@
 package platzi.play.plataforma;
 
 import platzi.play.contenido.Pelicula;
+import platzi.play.excepcion.PeliculaExistenteException;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,6 +18,11 @@ public class Plataforma {
     }
 
     public void agregar(Pelicula elemento) {
+        Pelicula contenido = this.buscarPorTitulo(elemento.getTitulo());
+        if(contenido != null){
+            throw new PeliculaExistenteException(elemento.getTitulo());
+        }
+
         this.contenido.add(elemento);
     }
 
@@ -82,4 +88,17 @@ public class Plataforma {
     public String getNombre() {
         return nombre;
     }
+
+    public List<Pelicula> buscarPorIdioma(Idioma idioma) {
+        return contenido.stream()
+                .filter(contenido -> contenido.getIdioma().equals(idioma))
+                .toList();
+    }
+
+    public List<Pelicula> buscarPorCalidad(Calidad calidad) {
+        return contenido.stream()
+                .filter(contenido -> contenido.getCalidad().equals(calidad))
+                .toList();
+    }
+
 }

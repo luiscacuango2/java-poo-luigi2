@@ -1,9 +1,12 @@
 package platzi.play.contenido;
 
+import platzi.play.plataforma.Calidad;
 import platzi.play.plataforma.Genero;
+import platzi.play.plataforma.Idioma;
 
 import java.awt.geom.GeneralPath;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Pelicula {
     private String titulo;
@@ -13,17 +16,21 @@ public class Pelicula {
     private LocalDate fechaEstreno;
     private double calificacion;
     private boolean disponible;
+    private Idioma idioma;
+    private Calidad calidad;
 
-    public Pelicula(String titulo, int duracion, Genero genero) {
+    public Pelicula(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad) {
         this.titulo = titulo;
         this.duracion = duracion;
         this.genero = genero;
+        this.idioma = idioma;
+        this.calidad = calidad;
         this.fechaEstreno = LocalDate.now();
         this.disponible = true;
     }
 
-    public Pelicula(String titulo, int duracion, Genero genero, double calificacion) {
-        this(titulo, duracion, genero);
+    public Pelicula(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad, double calificacion) {
+        this(titulo, duracion, genero, idioma, calidad);
         this.calificar(calificacion);
     }
 
@@ -34,6 +41,8 @@ public class Pelicula {
     public String obtenerFichaTecnica() {
         return "🎬 " + titulo + " (" + fechaEstreno.getYear() + ")\n" +
                 "🎞 Género: " + genero + "\n" +
+                "🌎 Idioma: " + idioma + "\n" +
+                "✔ Calidad: " + calidad + "\n" +
                 "⭐ Calificación: " + calificacion + "/5\n";
     }
 
@@ -75,6 +84,14 @@ public class Pelicula {
         return descripcion;
     }
 
+    public Idioma getIdioma() {
+        return idioma;
+    }
+
+    public Calidad getCalidad() {
+        return calidad;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
@@ -101,5 +118,13 @@ public class Pelicula {
 
     public void setCalificacion(double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public void setIdioma(Idioma idioma) {
+        this.idioma = idioma;
+    }
+
+    public void setCalidad(Calidad calidad) {
+        this.calidad = calidad;
     }
 }
