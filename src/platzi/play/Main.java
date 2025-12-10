@@ -22,8 +22,9 @@ public class Main {
     public static final int VER_MUY_POPULARES = 8;
     public static final int VER_MAS_LARGA = 9;
     public static final int VER_MAS_CORTA = 10;
-    public static final int ELIMINAR = 11;
-    public static final int SALIR = 12;
+    public static final int REPRODUCIR = 11;
+    public static final int ELIMINAR = 12;
+    public static final int SALIR = 13;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -31,11 +32,11 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
-        System.out.println("Más de " + plataforma.getDuracionTotal() + " minutos de contenido! \n");
+        System.out.println("Más de " + plataforma.getDuracionTotal() + " minutos de contenido!");
 
         while(true){
             int opcionElegida = ScannerUtils.capturarNumero("""
-                    Ingrese una de las siguientes opciones:
+                    \nIngrese una de las siguientes opciones:
                     1. Agregar contenido
                     2. Mostrar todo
                     3. Buscar por titulo
@@ -46,8 +47,9 @@ public class Main {
                     8. Ver muy populares
                     9. Ver mas larga
                     10. Ver corta
-                    11. Eliminar
-                    12. Salir
+                    11. Reproducir
+                    12. Eliminar
+                    13. Salir
                     """);
 
             switch (opcionElegida){
@@ -121,6 +123,16 @@ public class Main {
                     System.out.println("Las película mas corta es:\n");
                     Pelicula peliculaMasCorta = plataforma.getMasCorta();
                     System.out.println(peliculaMasCorta.obtenerFichaTecnica() + "⌛ Duración: " + peliculaMasCorta.getDuracion() + "\n");
+                }
+                case REPRODUCIR -> {
+                    String nombre = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
+                    Pelicula contenido = plataforma.buscarPorTitulo(nombre);
+
+                    if(contenido != null){
+                        plataforma.reproducir(contenido);
+                    } else {
+                        System.out.println(nombre + " no existe.");
+                    }
                 }
                 case ELIMINAR -> {
                     String nombreAEliminar = ScannerUtils.capturarTexto("Nombre del contenido a eliminar");
