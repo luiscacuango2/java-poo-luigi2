@@ -9,7 +9,6 @@ import java.util.*;
 public class Plataforma {
     private String nombre;
     private List<Pelicula> contenido; //Agregacion
-    private static final int MUY_POPULAR = 4;
     private Map<Pelicula, Integer> visualizaciones;
 
     public Plataforma(String nombre) {
@@ -82,7 +81,7 @@ public class Plataforma {
 
     public List<Pelicula> getMuyPopulares(){
         return contenido.stream()
-                .filter(pelicula -> pelicula.getCalificacion() > MUY_POPULAR)
+                .filter(pelicula -> pelicula.getCalificacion() > 4)
                 .sorted(Comparator.comparingDouble(Pelicula::getCalificacion).reversed())
                 .toList();
     }

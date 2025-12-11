@@ -4,8 +4,14 @@ import platzi.play.contenido.Pelicula;
 import platzi.play.contenido.ResumenContenido;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.*;
+import platzi.play.util.FileUtils;
 import platzi.play.util.ScannerUtils;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -19,7 +25,7 @@ public class Main {
     public static final int BUSCAR_POR_IDIOMA = 5;
     public static final int BUSCAR_POR_CALIDAD = 6;
     public static final int VER_POPULARES = 7;
-    public static final int VER_MUY_POPULARES = 8;
+    public static final int VER_MAS_POPULARES = 8;
     public static final int VER_MAS_LARGA = 9;
     public static final int VER_MAS_CORTA = 10;
     public static final int REPRODUCIR = 11;
@@ -44,8 +50,8 @@ public class Main {
                     5. Buscar por idioma
                     6. Buscar por calidad
                     7. Ver populares
-                    8. Ver muy populares
-                    9. Ver mas larga
+                    8. Ver más populares
+                    9. Ver más larga
                     10. Ver corta
                     11. Reproducir
                     12. Eliminar
@@ -86,43 +92,43 @@ public class Main {
                     Genero generoBuscado = ScannerUtils.capturarGenero("Genero del contenido a buscar");
 
                     List<Pelicula> contenidoPorGenero = plataforma.buscarPorGenero(generoBuscado);
-                    System.out.println("\n" + contenidoPorGenero.size() + " encontrados para el género " + generoBuscado);
+                    System.out.println("\n" + contenidoPorGenero.size() + " encontrados para el género " + generoBuscado + ":");
                     contenidoPorGenero.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case BUSCAR_POR_IDIOMA -> {
                     Idioma idiomaBuscado = ScannerUtils.capturarIdioma("Idioma del contenido a buscar");
 
                     List<Pelicula> contenidoPorIdioma = plataforma.buscarPorIdioma(idiomaBuscado);
-                    System.out.println("\n" + contenidoPorIdioma.size() + " encontrados para el idioma " + idiomaBuscado);
+                    System.out.println("\n" + contenidoPorIdioma.size() + " encontrados para el idioma " + idiomaBuscado + ":");
                     contenidoPorIdioma.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case BUSCAR_POR_CALIDAD -> {
                     Calidad calidadBuscada = ScannerUtils.capturarCalidad("Calidad del contenido a buscar");
 
                     List<Pelicula> contenidoPorCalidad = plataforma.buscarPorCalidad(calidadBuscada);
-                    System.out.println("\n" + contenidoPorCalidad.size() + " encontrados para la calidad " + calidadBuscada);
+                    System.out.println("\n" + contenidoPorCalidad.size() + " encontrados para la calidad " + calidadBuscada + ":");
                     contenidoPorCalidad.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case VER_POPULARES -> {
-                    int cantidad = ScannerUtils.capturarNumero("Cantidad de resultados a mostrar");
+                    int cantidad = ScannerUtils.capturarNumero("Cantidad de películas populares a mostrar");
 
                     List<Pelicula> contenidosPopulares = plataforma.getPopulares(cantidad);
                     contenidosPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
-                case VER_MUY_POPULARES -> {
-                    System.out.println("Las películas muy populares 🌟 son:");
+                case VER_MAS_POPULARES -> {
+                    System.out.println("Las películas más populares (>4.0) 🌟 son:");
                     List<Pelicula> peliculasMuyPopulares = plataforma.getMuyPopulares();
                     peliculasMuyPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case VER_MAS_LARGA -> {
-                    System.out.println("Las película mas larga es:\n");
+                    System.out.println("Las película más larga es:");
                     Pelicula peliculaMasLarga = plataforma.getMasLarga();
-                    System.out.println(peliculaMasLarga.obtenerFichaTecnica() + "⌛ Duración: " + peliculaMasLarga.getDuracion() + "\n");
+                    System.out.println(peliculaMasLarga.obtenerFichaTecnica() + "\n⌛ Duración: " + peliculaMasLarga.getDuracion());
                 }
                 case VER_MAS_CORTA -> {
-                    System.out.println("Las película mas corta es:\n");
+                    System.out.println("Las película más corta es:");
                     Pelicula peliculaMasCorta = plataforma.getMasCorta();
-                    System.out.println(peliculaMasCorta.obtenerFichaTecnica() + "⌛ Duración: " + peliculaMasCorta.getDuracion() + "\n");
+                    System.out.println(peliculaMasCorta.obtenerFichaTecnica() + "\n⌛ Duración: " + peliculaMasCorta.getDuracion());
                 }
                 case REPRODUCIR -> {
                     String nombre = ScannerUtils.capturarTexto("Nombre del contenido a reproducir");
@@ -151,15 +157,6 @@ public class Main {
     }
 
     private static void cargarPeliculas(Plataforma plataforma) {
-        plataforma.agregar(new Pelicula("Shrek", 90, Genero.ANIMADA, Idioma.INGLES, Calidad.BAJA, 0));
-        plataforma.agregar(new Pelicula("Inception", 148, Genero.CIENCIA_FICCION, Idioma.INGLES, Calidad.MEDIA,0));
-        plataforma.agregar(new Pelicula("Titanic", 195, Genero.DRAMA, Idioma.ESPAÑOL, Calidad.ALTA, 4.6));
-        plataforma.agregar(new Pelicula("John Wick", 101, Genero.ACCION, Idioma.ESPAÑOL, Calidad.HD,0));
-        plataforma.agregar(new Pelicula("El Conjuro", 112, Genero.TERROR, Idioma.PORTUGUES, Calidad.UHD, 3.0));
-        plataforma.agregar(new Pelicula("Coco", 105, Genero.ANIMADA, Idioma.FRANCES, Calidad.BAJA, 4.7));
-        plataforma.agregar(new Pelicula("Interstellar", 169, Genero.CIENCIA_FICCION, Idioma.ITALIANO, Calidad.MEDIA, 5));
-        plataforma.agregar(new Pelicula("Joker", 122, Genero.DRAMA, Idioma.PORTUGUES, Calidad.ALTA,0));
-        plataforma.agregar(new Pelicula("Toy Story", 81, Genero.ANIMADA, Idioma.FRANCES, Calidad.HD, 4.5));
-        plataforma.agregar(new Pelicula("Avengers: Endgame", 181, Genero.ACCION, Idioma.ITALIANO, Calidad.UHD, 3.9));
+        plataforma.getContenido().addAll(FileUtils.leerContenido());
     }
 }
