@@ -2,6 +2,7 @@ package platzi.play;
 
 import platzi.play.contenido.Contenido;
 import platzi.play.contenido.Documental;
+import platzi.play.contenido.Pelicula;
 import platzi.play.contenido.ResumenContenido;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.plataforma.*;
@@ -20,13 +21,14 @@ public class Main {
     public static final int BUSCAR_POR_GENERO = 4;
     public static final int BUSCAR_POR_IDIOMA = 5;
     public static final int BUSCAR_POR_CALIDAD = 6;
-    public static final int VER_POPULARES = 7;
-    public static final int VER_MAS_POPULARES = 8;
-    public static final int VER_MAS_LARGA = 9;
-    public static final int VER_MAS_CORTA = 10;
-    public static final int REPRODUCIR = 11;
-    public static final int ELIMINAR = 12;
-    public static final int SALIR = 13;
+    public  static final int BUSCAR_POR_TIPO = 7;
+    public static final int VER_POPULARES = 8;
+    public static final int VER_MAS_POPULARES = 9;
+    public static final int VER_MAS_LARGA = 10;
+    public static final int VER_MAS_CORTA = 11;
+    public static final int REPRODUCIR = 12;
+    public static final int ELIMINAR = 13;
+    public static final int SALIR = 14;
 
     public static void main(String[] args) {
         Plataforma plataforma = new Plataforma(NOMBRE_PLATAFORMA);
@@ -45,6 +47,7 @@ public class Main {
                     4. Buscar por genero
                     5. Buscar por idioma
                     6. Buscar por calidad
+                    7. Buscar por tipo
                     7. Ver populares
                     8. Ver más populares
                     9. Ver más larga
@@ -111,6 +114,17 @@ public class Main {
                     List<Contenido> contenidoPorCalidad = plataforma.buscarPorCalidad(calidadBuscada);
                     System.out.println("\n" + contenidoPorCalidad.size() + " encontrados para la calidad " + calidadBuscada + ":");
                     contenidoPorCalidad.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                }
+                case BUSCAR_POR_TIPO -> {
+                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar?\n1. Película\n2. Documental");
+
+                    if(tipoDeContenido == 1) {
+                        List<Pelicula> peliculas = plataforma.getPeliculas();
+                        peliculas.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica()));
+                    } else {
+                        List<Documental> documentales = plataforma.getDocumentales();
+                        documentales.forEach(documental -> System.out.println(documental.obtenerFichaTecnica()));
+                    }
                 }
                 case VER_POPULARES -> {
                     int cantidad = ScannerUtils.capturarNumero("Cantidad de películas populares a mostrar");
