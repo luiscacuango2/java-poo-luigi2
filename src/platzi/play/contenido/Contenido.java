@@ -6,7 +6,8 @@ import platzi.play.plataforma.Idioma;
 
 import java.time.LocalDate;
 
-public class Contenido {
+public abstract class Contenido {
+    private String tipo;
     private String titulo;
     private String descripcion;
     private int duracion;
@@ -32,17 +33,9 @@ public class Contenido {
         this.calificar(calificacion);
     }
 
-    public void reproducir() {
-        System.out.println("Reproduciendo " + titulo);
-    }
+    public abstract void reproducir();
 
-    public String obtenerFichaTecnica() {
-        return "\n🎬 " + titulo + " (" + fechaEstreno.getYear() + ")\n" +
-                "🎞 Género: " + genero + "\n" +
-                "🌎 Idioma: " + idioma + "\n" +
-                "✔ Calidad: " + calidad + "\n" +
-                "⭐ Calificación: " + calificacion + "/5";
-    }
+    public abstract String obtenerFichaTecnica();
 
     public void calificar(double calificacion) {
         if (calificacion >= 0 && calificacion <= 5) {
@@ -52,6 +45,10 @@ public class Contenido {
 
     public boolean esPopular() {
         return calificacion >= 4;
+    }
+
+    public String getTipo() {
+        return tipo;
     }
 
     public String getTitulo() {
@@ -88,6 +85,10 @@ public class Contenido {
 
     public Calidad getCalidad() {
         return calidad;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public void setTitulo(String titulo) {

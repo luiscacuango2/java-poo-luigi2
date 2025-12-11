@@ -48,13 +48,13 @@ public class Main {
                     5. Buscar por idioma
                     6. Buscar por calidad
                     7. Buscar por tipo
-                    7. Ver populares
-                    8. Ver más populares
-                    9. Ver más larga
-                    10. Ver corta
-                    11. Reproducir
-                    12. Eliminar
-                    13. Salir
+                    8. Ver populares
+                    9. Ver más populares
+                    10. Ver más larga
+                    11. Ver corta
+                    12. Reproducir
+                    13. Eliminar
+                    14. Salir
                     """);
 
             switch (opcionElegida){
@@ -69,7 +69,7 @@ public class Main {
 
                     try {
                         if (tipoDeContenido == 1) {
-                            plataforma.agregar(new Contenido(nombre, duracion, genero, idioma, calidad, calificacion));
+                            plataforma.agregar(new Pelicula(nombre, duracion, genero, idioma, calidad, calificacion));
                         } else {
                             String narrador = ScannerUtils.capturarTexto("Narrador del documental");
                             plataforma.agregar(new Documental(nombre, duracion, genero, idioma, calidad, calificacion, narrador));
@@ -116,7 +116,7 @@ public class Main {
                     contenidoPorCalidad.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case BUSCAR_POR_TIPO -> {
-                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres agregar?\n1. Película\n2. Documental");
+                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido quieres reproducir?\n1. Película\n2. Documental");
 
                     if(tipoDeContenido == 1) {
                         List<Pelicula> peliculas = plataforma.getPeliculas();
@@ -127,10 +127,17 @@ public class Main {
                     }
                 }
                 case VER_POPULARES -> {
-                    int cantidad = ScannerUtils.capturarNumero("Cantidad de películas populares a mostrar");
+                    int tipoDeContenido = ScannerUtils.capturarNumero("Que tipo de contenido popular quieres ver?\n1. Película\n2. Documental\n");
 
-                    List<Contenido> contenidosPopulares = plataforma.getPopulares(cantidad);
-                    contenidosPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
+                    if(tipoDeContenido == 1) {
+                        int cantidad = ScannerUtils.capturarNumero("Cantidad de películas populares a mostrar");
+                        List<Pelicula> peliculasPopulares = plataforma.getPeliculasPopulares(cantidad);
+                        peliculasPopulares.forEach(pelicula -> System.out.println(pelicula.obtenerFichaTecnica()));
+                    } else {
+                        int cantidad = ScannerUtils.capturarNumero("Cantidad de documentales populares a mostrar");
+                        List<Documental> documentalesPopulares = plataforma.getDocumentalesPopulares(cantidad);
+                        documentalesPopulares.forEach(documental -> System.out.println(documental.obtenerFichaTecnica()));
+                    }
                 }
                 case VER_MAS_POPULARES -> {
                     System.out.println("Los contenidos más populares (>4.0) 🌟 son:");
@@ -138,12 +145,12 @@ public class Main {
                     peliculasMuyPopulares.forEach(contenido -> System.out.println(contenido.obtenerFichaTecnica()));
                 }
                 case VER_MAS_LARGA -> {
-                    System.out.println("El contenido más larga es:");
+                    System.out.println("El contenido más largo es:");
                     Contenido contenidoMasLarga = plataforma.getMasLarga();
                     System.out.println(contenidoMasLarga.obtenerFichaTecnica() + "\n⌛ Duración: " + contenidoMasLarga.getDuracion());
                 }
                 case VER_MAS_CORTA -> {
-                    System.out.println("El contenido más corta es:");
+                    System.out.println("El contenido más corto es:");
                     Contenido contenidoMasCorta = plataforma.getMasCorta();
                     System.out.println(contenidoMasCorta.obtenerFichaTecnica() + "\n⌛ Duración: " + contenidoMasCorta.getDuracion());
                 }

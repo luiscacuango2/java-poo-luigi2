@@ -76,7 +76,7 @@ public class Plataforma {
                 .toList();
     }
 
-    public List<Contenido> getPopulares(int cantidad){
+    public List<Contenido> getPopulares(int cantidad) {
         return contenido.stream()
                 .sorted(Comparator.comparingDouble(Contenido::getCalificacion).reversed())
                 .limit(cantidad)
@@ -90,10 +90,28 @@ public class Plataforma {
                 .toList();
     }
 
+    public List<Pelicula> getPeliculasPopulares(int cantidad){
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Pelicula)
+                .map(contenidoFiltrado -> (Pelicula) contenidoFiltrado)
+                .sorted(Comparator.comparingDouble(Pelicula::getCalificacion).reversed())
+                .limit(cantidad)
+                .toList();
+    }
+
     public List<Documental> getDocumentales(){
         return contenido.stream()
                 .filter(contenido -> contenido instanceof Documental)
                 .map(contenidoFiltrado -> (Documental) contenidoFiltrado)
+                .toList();
+    }
+
+    public List<Documental> getDocumentalesPopulares(int cantidad){
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Documental)
+                .map(contenidoFiltrado -> (Documental) contenidoFiltrado)
+                .sorted(Comparator.comparingDouble(Documental::getCalificacion).reversed())
+                .limit(cantidad)
                 .toList();
     }
 
