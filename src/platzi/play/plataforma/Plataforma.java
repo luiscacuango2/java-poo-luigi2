@@ -1,9 +1,6 @@
 package platzi.play.plataforma;
 
-import platzi.play.contenido.Contenido;
-import platzi.play.contenido.Documental;
-import platzi.play.contenido.Pelicula;
-import platzi.play.contenido.ResumenContenido;
+import platzi.play.contenido.*;
 import platzi.play.excepcion.PeliculaExistenteException;
 import platzi.play.util.FileUtils;
 
@@ -132,6 +129,13 @@ public class Plataforma {
         return contenido.stream()
                 .min(Comparator.comparingInt(Contenido::getDuracion))
                 .orElse(null);
+    }
+
+    public List<Promocionable> getContenidoPromocionable() {
+        return contenido.stream()
+                .filter(contenido -> contenido instanceof Promocionable)
+                .map(contenidoProm -> (Promocionable) contenidoProm)
+                .toList();
     }
 
     public int getDuracionTotal() {

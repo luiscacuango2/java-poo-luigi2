@@ -12,7 +12,7 @@ import platzi.play.util.ScannerUtils;
 import java.util.List;
 
 public class Main {
-    public static final String NOMBRE_PLATAFORMA = "SISTEMA DE GESTIÓN DE CONTENIDOS";
+    public static final String NOMBRE_PLATAFORMA = "SISTEMA DE GESTIÓN DE CONTENIDOS 🍿";
     public static final String VERSION = "1.0.0";
 
     public static final int AGREGAR = 1;
@@ -36,7 +36,8 @@ public class Main {
 
         cargarPeliculas(plataforma);
 
-        System.out.println("Más de " + plataforma.getDuracionTotal() + " minutos de contenido!");
+        System.out.println("Más de " + plataforma.getDuracionTotal() + " minutos de contenido!\n");
+        plataforma.getContenidoPromocionable().forEach(promocionable -> System.out.println(promocionable.promocionar()));
 
         while(true){
             int opcionElegida = ScannerUtils.capturarNumero("""

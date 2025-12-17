@@ -4,7 +4,7 @@ import platzi.play.plataforma.Calidad;
 import platzi.play.plataforma.Genero;
 import platzi.play.plataforma.Idioma;
 
-public class Documental extends Contenido {
+public class Documental extends Contenido implements Promocionable {
     private String narrador;
 
     public Documental(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad) {
@@ -23,7 +23,7 @@ public class Documental extends Contenido {
                 "🌎 Idioma: " + getIdioma() + "\n" +
                 "✔ Calidad: " + getCalidad() + "\n" +
                 "⭐ Calificación: " + getCalificacion() + "/5\n" +
-                "🗣 Narrador: " + getNarrador();
+                "🗣 Narrador por: " + getNarrador();
     }
 
     public Documental(String titulo, int duracion, Genero genero, Idioma idioma, Calidad calidad, double calificacion, String narrador) {
@@ -31,7 +31,13 @@ public class Documental extends Contenido {
         this.narrador = narrador;
     }
 
+    @Override
+    public String promocionar() {
+        return "✨ Descubre el documental " + this.getTitulo() + " narrado por " + this.getNarrador() + " ahora en LuigiPlay!";
+    }
+
     public String getNarrador() {
         return narrador;
     }
+
 }
